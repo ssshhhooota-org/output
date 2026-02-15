@@ -1,2 +1,68 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+/* Code block wrapper (created by CodeBlockEnhancer) */
+.code-block-wrapper {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+}
+
+/* Code block title */
+.code-block-wrapper [data-rehype-pretty-code-title] {
+  padding: 0.5rem 1rem;
+  margin: 0 !important;
+  font-size: 0.8rem;
+  font-family: ui-monospace, monospace;
+  color: #525252;
+  background-color: #f0f0f0;
+  border: 1px solid #e5e5e5;
+  border-bottom: none;
+  border-radius: 0.375rem 0.375rem 0 0;
+}
+
+/* Code block with title: no top radius */
+.code-block-wrapper [data-rehype-pretty-code-title] ~ pre[data-theme] {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Code blocks */
+.code-block-wrapper pre {
+  margin: 0 !important;
+}
+
+pre[data-theme] {
+  position: relative;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid #e5e5e5;
+  background-color: #fafafa !important;
+  overflow-x: auto;
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Line numbers (only when title is present) */
+.code-block-wrapper:has([data-rehype-pretty-code-title]) code[data-theme] {
+  counter-reset: line;
+}
+
+.code-block-wrapper:has([data-rehype-pretty-code-title]) code[data-theme] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1.5rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: #d4d4d4;
+  font-size: 0.8em;
+}
+
+/* Inline code */
+.prose :where(code):not(pre code) {
+  background-color: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.875em;
+}

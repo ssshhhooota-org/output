@@ -4,7 +4,7 @@ export function Header() {
   return (
     <header className="py-8">
       <Link href="/" className="text-lg font-bold tracking-tight">
-        ssshhhooota
+        ssshhhooota output
       </Link>
     </header>
   );
