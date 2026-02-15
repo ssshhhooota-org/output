@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ssshhhooota output
 
-## Getting Started
+Next.js (App Router) + SSG で構築した個人技術ブログ。
 
-First, run the development server:
+## Tech Stack
+
+- Next.js 16 (App Router / SSG)
+- TypeScript
+- Tailwind CSS v4 + @tailwindcss/typography
+- next-mdx-remote (Markdown レンダリング)
+- rehype-pretty-code + shiki (シンタックスハイライト)
+- remark-gfm (テーブル等 GFM 対応)
+
+## Structure
+
+```
+content/
+├── blog/       # ブログ記事 (*.md)
+├── scrap/      # スクラップ (*.md)
+└── assets/     # 画像等
+src/
+├── app/
+│   ├── page.tsx              # トップ: blog + scrap 混合一覧
+│   ├── blog/[slug]/page.tsx  # ブログ記事詳細
+│   └── scrap/[slug]/page.tsx # スクラップ詳細
+├── components/
+│   └── CodeBlockEnhancer.tsx # 言語名・ファイル名・Copyボタン
+└── lib/
+    └── posts.ts              # Markdown 読み込み・パース
+```
+
+## Markdown Format
+
+```markdown
+---
+created: 2026/02/15 12:00
+updated: 2026/02/15 12:50
+tags:
+  - Next.js
+public: true
+thumbnail: "[[image.png]]"
+---
+
+# タイトル (本文の最初の見出しから取得)
+```
+
+- `public: false` の記事は非公開
+- コードブロックのファイル名指定: `` ```ts:hoge.ts ``
+
+## Development
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Content Sync
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+コンテンツは別リポジトリで管理。push 時に GitHub Actions でこのリポジトリの `content/` に同期 → Vercel が自動ビルド。
