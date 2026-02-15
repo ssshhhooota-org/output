@@ -1,7 +1,17 @@
+import { getAllPosts } from "@/lib/posts";
+import { PostCard } from "@/components/PostCard";
+
 export default function Home() {
+  const posts = getAllPosts();
+
   return (
-    <div>
-      <h1>Hello</h1>
-    </div>
+    <section>
+      <h1 className="sr-only">記事一覧</h1>
+      <div className="divide-y divide-neutral-200">
+        {posts.map((post) => (
+          <PostCard key={post.slug} post={post} />
+        ))}
+      </div>
+    </section>
   );
 }
