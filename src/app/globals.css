@@ -43,6 +43,10 @@ pre[data-theme] {
 }
 
 /* Line numbers (only when title is present) */
+.code-block-wrapper:has([data-rehype-pretty-code-title]) pre[data-theme] {
+  padding-left: 0;
+}
+
 .code-block-wrapper:has([data-rehype-pretty-code-title]) code[data-theme] {
   counter-reset: line;
 }
@@ -51,11 +55,15 @@ pre[data-theme] {
   counter-increment: line;
   content: counter(line);
   display: inline-block;
-  width: 1.5rem;
-  margin-right: 1rem;
+  width: 2.5rem;
+  padding-right: 1rem;
   text-align: right;
   color: #d4d4d4;
   font-size: 0.8em;
+  position: sticky;
+  left: 0;
+  background-color: #fafafa;
+  box-sizing: border-box;
 }
 
 /* Inline code */
@@ -65,4 +73,9 @@ pre[data-theme] {
   border-radius: 0.25rem;
   padding: 0.125rem 0.375rem;
   font-size: 0.875em;
+}
+
+.prose :where(code):not(pre code)::before,
+.prose :where(code):not(pre code)::after {
+  content: none;
 }
