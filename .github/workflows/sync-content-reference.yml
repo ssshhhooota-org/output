@@ -1,0 +1,35 @@
+# REFERENCE: This workflow should be placed in the CONTENT repository
+# at .github/workflows/sync-to-blog.yml
+#
+# It syncs content from the content repo to the blog repo on push.
+#
+# Setup required:
+# 1. Generate SSH deploy key pair
+# 2. Add private key as secret BLOG_DEPLOY_KEY in content repo
+# 3. Add public key as deploy key (with write access) in blog repo
+
+name: Sync content to blog repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "blog/**"
+      - "assets/**"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push to blog repo
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          SSH_DEPLOY_KEY: ${{ secrets.BLOG_DEPLOY_KEY }}
+        with:
+          source-directory: "."
+          destination-github-username: "ssshhhooota"
+          destination-repository-name: "blog"
+          target-directory: "content"
+          target-branch: "main"
