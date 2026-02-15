@@ -24,6 +24,10 @@ function extractTitle(slug: string, content: string): string {
   return match ? match[1] : slug;
 }
 
+function stripTitle(content: string): string {
+  return content.replace(/^#\s+.+$/m, "").trimStart();
+}
+
 function parseThumbnail(raw: string | undefined): string {
   if (!raw) return "";
   const match = raw.match(/\[\[(.+?)\]\]/);
@@ -50,7 +54,7 @@ function getEntry(kind: ContentKind, slug: string): { meta: EntryMeta; content: 
       tags: Array.isArray(data.tags) ? data.tags : [],
       thumbnail: parseThumbnail(data.thumbnail),
     },
-    content: normalizeCodeBlocks(content),
+    content: normalizeCodeBlocks(stripTitle(content)),
   };
 }
 
