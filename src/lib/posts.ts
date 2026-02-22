@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import GithubSlugger from "github-slugger";
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
@@ -11,6 +12,12 @@ export type EntryMeta = {
   updated: string;
   tags: string[];
   thumbnail: string;
+};
+
+export type TocHeading = {
+  level: number;
+  text: string;
+  id: string;
 };
 
 type ContentKind = "blog" | "scrap";
@@ -32,6 +39,21 @@ function parseThumbnail(raw: string | undefined): string {
   if (!raw) return "";
   const match = raw.match(/\[\[(.+?)\]\]/);
   return match ? match[1] : raw;
+}
+
+export function extractHeadings(content: string): TocHeading[] {
+  const slugger = new GithubSlugger();
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const headings: TocHeading[] = [];
+  let match;
+  while ((match = headingRegex.exec(content)) !== null) {
+    headings.push({
+      level: match[1].length,
+      text: match[2],
+      id: slugger.slug(match[2]),
+    });
+  }
+  return headings;
 }
 
 // ```ts:hoge.ts → ```ts title="hoge.ts"
