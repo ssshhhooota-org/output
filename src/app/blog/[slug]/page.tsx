@@ -1,8 +1,10 @@
 import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
-import { getPostBySlug, getPostSlugs } from "@/lib/posts";
+import { getPostBySlug, getPostSlugs, extractHeadings } from "@/lib/posts";
 import { CodeBlockEnhancer } from "@/components/CodeBlockEnhancer";
+import { TableOfContents } from "@/components/TableOfContents";
 
 export async function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }));
@@ -27,6 +29,7 @@ export default async function PostPage({
 }) {
   const { slug } = await params;
   const { meta, content } = getPostBySlug(slug);
+  const headings = extractHeadings(content);
 
   const { content: mdxContent } = await compileMDX({
     source: content,
@@ -34,7 +37,7 @@ export default async function PostPage({
       mdxOptions: {
         format: "md",
         remarkPlugins: [remarkGfm],
-        rehypePlugins: [[rehypePrettyCode, { theme: "github-light" }]],
+        rehypePlugins: [rehypeSlug, [rehypePrettyCode, { theme: "github-light" }]],
       },
     },
   });
@@ -49,6 +52,7 @@ export default async function PostPage({
           )}
         </div>
         <h1 className="mt-1 text-2xl font-bold">{meta.title}</h1>
+        <TableOfContents headings={headings} />
         {meta.tags.length > 0 && (
           <div className="mt-2 flex gap-2">
             {meta.tags.map((tag) => (
