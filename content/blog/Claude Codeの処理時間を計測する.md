@@ -3,7 +3,7 @@ created: 2026/02/05 22:55
 updated: 2026/02/15 12:08
 public: true
 tags:
-  - claude_code
+  - claude code
   - hooks
 ---
 
