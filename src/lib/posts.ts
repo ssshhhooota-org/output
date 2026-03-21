@@ -61,6 +61,11 @@ function normalizeCodeBlocks(content: string): string {
   return content.replace(/```(\w+):(.+)/g, '```$1 title="$2"');
 }
 
+function parseDate(raw: unknown): string {
+  if (!raw) return "";
+  return String(raw).split(" ")[0];
+}
+
 function getEntry(kind: ContentKind, slug: string): { meta: EntryMeta; content: string } {
   slug = decodeURIComponent(slug);
   const filePath = path.join(getDir(kind), `${slug}.md`);
@@ -71,8 +76,8 @@ function getEntry(kind: ContentKind, slug: string): { meta: EntryMeta; content: 
     meta: {
       slug,
       title: extractTitle(slug, content),
-      created: data.created ?? "",
-      updated: data.updated ?? "",
+      created: parseDate(data.created),
+      updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
       thumbnail: parseThumbnail(data.thumbnail),
     },
@@ -99,8 +104,8 @@ function getAllEntries(kind: ContentKind): EntryMeta[] {
       return {
         slug,
         title: extractTitle(slug, content),
-        created: data.created ?? "",
-        updated: data.updated ?? "",
+        created: parseDate(data.created),
+        updated: parseDate(data.updated),
         tags: Array.isArray(data.tags) ? data.tags : [],
         thumbnail: parseThumbnail(data.thumbnail),
       };
@@ -118,3 +123,27 @@ export const getAllPosts = () => getAllEntries("blog");
 export const getScrapSlugs = () => getSlugs("scrap");
 export const getScrapBySlug = (slug: string) => getEntry("scrap", slug);
 export const getAllScraps = () => getAllEntries("scrap");
+
+// Tags
+export function getAllTags(): { tag: string; count: number }[] {
+  const all = [...getAllEntries("blog"), ...getAllEntries("scrap")];
+  const counts = new Map<string, number>();
+  for (const entry of all) {
+    for (const tag of entry.tags) {
+      counts.set(tag, (counts.get(tag) ?? 0) + 1);
+    }
+  }
+  return Array.from(counts.entries())
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count || a.tag.localeCompare(b.tag));
+}
+
+export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })[] {
+  const posts = getAllEntries("blog")
+    .filter((e) => e.tags.includes(tag))
+    .map((e) => ({ ...e, basePath: "/blog" }));
+  const scraps = getAllEntries("scrap")
+    .filter((e) => e.tags.includes(tag))
+    .map((e) => ({ ...e, basePath: "/scrap" }));
+  return [...posts, ...scraps].sort((a, b) => (a.created > b.created ? -1 : 1));
+}
