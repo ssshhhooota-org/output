@@ -42,7 +42,8 @@ export default async function ScrapPage({
   return (
     <article>
       <header className="mb-8">
-        <div className="flex gap-4 text-sm text-neutral-500">
+        <div className="flex items-center gap-3 text-sm text-neutral-500">
+          <span className="text-xs px-1.5 py-0.5 rounded bg-amber-100 text-amber-700">scrap</span>
           <time>作成: {meta.created}</time>
           {meta.updated && meta.updated !== meta.created && (
             <time>更新: {meta.updated}</time>
@@ -50,11 +51,15 @@ export default async function ScrapPage({
         </div>
         <h1 className="mt-1 text-2xl font-bold">{meta.title}</h1>
         {meta.tags.length > 0 && (
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2 flex flex-wrap gap-1">
             {meta.tags.map((tag) => (
-              <span key={tag} className="text-sm text-neutral-500">
-                #{tag}
-              </span>
+              <a
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="text-xs text-neutral-500 bg-neutral-100 hover:bg-neutral-200 px-2 py-0.5 rounded transition-colors"
+              >
+                {tag}
+              </a>
             ))}
           </div>
         )}
