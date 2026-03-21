@@ -9,8 +9,8 @@ export function PostCard({
   basePath: string;
 }) {
   return (
-    <article>
-      <Link href={`${basePath}/${entry.slug}`} className="group block py-4">
+    <article className="py-4">
+      <Link href={`${basePath}/${entry.slug}`} className="group block">
         <div className="flex items-center gap-2">
           <time className="text-sm text-neutral-500">{entry.created}</time>
           <span className={`text-xs px-1.5 py-0.5 rounded ${basePath === "/blog" ? "bg-neutral-200 text-neutral-600" : "bg-amber-100 text-amber-700"}`}>
@@ -21,6 +21,19 @@ export function PostCard({
           {entry.title}
         </h2>
       </Link>
+      {entry.tags.length > 0 && (
+        <div className="mt-1 flex flex-wrap gap-1">
+          {entry.tags.map((tag) => (
+            <Link
+              key={tag}
+              href={`/tags/${encodeURIComponent(tag)}`}
+              className="text-xs text-neutral-500 bg-neutral-100 hover:bg-neutral-200 px-2 py-0.5 rounded transition-colors"
+            >
+              {tag}
+            </Link>
+          ))}
+        </div>
+      )}
     </article>
   );
 }
