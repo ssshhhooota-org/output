@@ -1,6 +1,6 @@
 ---
 created: 2026/03/23 22:13
-updated: 2026/03/23 23:23
+updated: 2026/03/23 23:29
 tags:
   - lazysql
   - tui
@@ -128,7 +128,7 @@ TmuxのPopup機能を使って、起動できるようにしています。
 
 lazysqlだけでなく、lazygit・lazydockerも同様に設定しています。
 
-```:.tmux.conf
+```text:.tmux.conf
 # lazygit
 bind r popup -xC -yC -w90% -h90% -d '#{pane_current_path}' -E 'lazygit'
 # lazysql
