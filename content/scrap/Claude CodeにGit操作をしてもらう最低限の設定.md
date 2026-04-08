@@ -1,10 +1,10 @@
 ---
 created: 2026/04/08 23:18
-updated: 2026/04/08 23:42
+updated: 2026/04/08 23:47
 tags: 
-  - claude code
-  - git
-  - github
+  - ClaudeCode
+  - Git
+  - GitHub
 public: true
 thumbnail:
 ---

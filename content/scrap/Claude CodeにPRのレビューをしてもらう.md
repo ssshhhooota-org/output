@@ -1,9 +1,9 @@
 ---
 created: 2026/03/17 22:23
-updated: 2026/03/17 22:52
+updated: 2026/04/08 23:48
 public: true
 tags:
-  - claude code
+  - ClaudeCode
 ---
 
 # Claude CodeにPRのレビューをしてもらう
