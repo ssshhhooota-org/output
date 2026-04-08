@@ -1,6 +1,6 @@
 ---
 created: 2026/04/08 23:18
-updated: 2026/04/08 23:47
+updated: 2026/04/08 23:59
 tags: 
   - ClaudeCode
   - Git
@@ -33,6 +33,7 @@ https://github.com/ssshhhooota/git_with_claude_code/
 5. 自分がレビューして自分がmerge
 6. Claudeに対応完了の旨を伝えるとworktreeを削除してくれる
 7. 自分が`gh poi`コマンドを叩く
+  - マージ済みローカルブランチを削除する
   - LazygitのLocal Branches paneにいる時に`shift + c`で実行できるようショートカット設定をしている
 
 ## Claudeの制御
