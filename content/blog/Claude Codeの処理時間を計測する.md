@@ -1,9 +1,9 @@
 ---
 created: 2026/02/05 22:55
-updated: 2026/03/23 23:32
+updated: 2026/04/08 23:45
 public: true
 tags:
-  - claude code
+  - Claude Code
 ---
 
 # Claude Codeの処理時間を計測する
