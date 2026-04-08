@@ -1,10 +1,9 @@
 ---
 created: 2026/02/05 22:55
-updated: 2026/02/15 12:08
+updated: 2026/03/23 23:32
 public: true
 tags:
-  - claude_code
-  - hooks
+  - claudecode
 ---
 
 # Claude Codeの処理時間を計測する
