@@ -3,7 +3,7 @@ created: 2026/02/05 22:55
 updated: 2026/03/23 23:32
 public: true
 tags:
-  - claudecode
+  - claude code
 ---
 
 # Claude Codeの処理時間を計測する
