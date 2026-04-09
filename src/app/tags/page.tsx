@@ -12,10 +12,10 @@ export default function TagsPage() {
           <Link
             key={tag}
             href={`/tags/${encodeURIComponent(tag)}`}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 rounded text-sm transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded text-sm transition-colors text-neutral-900 dark:text-neutral-100"
           >
             <span>{tag}</span>
-            <span className="text-neutral-400 text-xs">{count}</span>
+            <span className="text-neutral-400 dark:text-neutral-500 text-xs">{count}</span>
           </Link>
         ))}
       </div>
