@@ -13,7 +13,7 @@ export function PostCard({
       <Link href={`${basePath}/${entry.slug}`} className="group block">
         <div className="flex items-center gap-2">
           <time className="text-sm text-neutral-500">{entry.created}</time>
-          <span className={`text-xs px-1.5 py-0.5 rounded ${basePath === "/blog" ? "bg-neutral-200 text-neutral-600" : "bg-amber-100 text-amber-700"}`}>
+          <span className={`text-xs px-1.5 py-0.5 rounded ${basePath === "/blog" ? "bg-neutral-200 text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300" : "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"}`}>
             {basePath === "/blog" ? "blog" : "scrap"}
           </span>
         </div>
@@ -27,7 +27,7 @@ export function PostCard({
             <Link
               key={tag}
               href={`/tags/${encodeURIComponent(tag)}`}
-              className="text-xs text-neutral-500 bg-neutral-100 hover:bg-neutral-200 px-2 py-0.5 rounded transition-colors"
+              className="text-xs text-neutral-500 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 px-2 py-0.5 rounded transition-colors"
             >
               {tag}
             </Link>
