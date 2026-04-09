@@ -14,7 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script src="/theme-init.js" />
+      </head>
       <body className="mx-auto max-w-2xl px-4 antialiased">
         <Header />
         <main className="min-h-[60vh] py-8">{children}</main>
