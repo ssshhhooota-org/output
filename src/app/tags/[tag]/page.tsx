@@ -20,7 +20,7 @@ export default async function TagPage({
   return (
     <section>
       <h1 className="text-xl font-bold mb-6">#{decoded}</h1>
-      <div className="divide-y divide-neutral-200">
+      <div className="divide-y divide-neutral-200 dark:divide-neutral-700">
         {entries.map((entry) => (
           <PostCard
             key={`${entry.basePath}-${entry.slug}`}
