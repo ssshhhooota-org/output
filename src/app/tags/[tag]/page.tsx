@@ -6,11 +6,7 @@ export function generateStaticParams() {
   return getAllTags().map(({ tag }) => ({ tag: encodeURIComponent(tag) }));
 }
 
-export default async function TagPage({
-  params,
-}: {
-  params: Promise<{ tag: string }>;
-}) {
+export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag } = await params;
   const decoded = decodeURIComponent(tag);
   const entries = getEntriesByTag(decoded);

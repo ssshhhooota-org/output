@@ -8,11 +8,7 @@ export async function generateStaticParams() {
   return getScrapSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { meta } = getScrapBySlug(slug);
   return {
@@ -20,11 +16,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function ScrapPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ScrapPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const { meta, content } = getScrapBySlug(slug);
 
@@ -34,7 +26,9 @@ export default async function ScrapPage({
       mdxOptions: {
         format: "md",
         remarkPlugins: [remarkGfm],
-        rehypePlugins: [[rehypePrettyCode, { theme: { light: "github-light", dark: "github-dark-dimmed" } }]],
+        rehypePlugins: [
+          [rehypePrettyCode, { theme: { light: "github-light", dark: "github-dark-dimmed" } }],
+        ],
       },
     },
   });
@@ -43,11 +37,11 @@ export default async function ScrapPage({
     <article>
       <header className="mb-8">
         <div className="flex items-center gap-3 text-sm text-neutral-500">
-          <span className="text-xs px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300">scrap</span>
+          <span className="text-xs px-1.5 py-0.5 rounded bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300">
+            scrap
+          </span>
           <time>作成: {meta.created}</time>
-          {meta.updated && meta.updated !== meta.created && (
-            <time>更新: {meta.updated}</time>
-          )}
+          {meta.updated && meta.updated !== meta.created && <time>更新: {meta.updated}</time>}
         </div>
         <h1 className="mt-1 text-2xl font-bold">{meta.title}</h1>
         {meta.tags.length > 0 && (

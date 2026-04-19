@@ -102,7 +102,10 @@ html:not(.dark) pre[data-theme="dark"] {
   box-sizing: border-box;
 }
 
-.dark .code-block-wrapper:has([data-rehype-pretty-code-title]) code[data-theme] > [data-line]::before {
+.dark
+  .code-block-wrapper:has([data-rehype-pretty-code-title])
+  code[data-theme]
+  > [data-line]::before {
   color: #525252;
   background-color: #1e1e1e;
 }
