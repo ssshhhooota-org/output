@@ -186,13 +186,13 @@ export function getNoteBySlug(
     meta: {
       slug,
       page,
-      title: extractTitle(slug, content),
+      title: data.title ?? extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
       thumbnail: parseThumbnail(data.thumbnail),
     },
-    content: normalizeCodeBlocks(stripTitle(content)),
+    content: normalizeCodeBlocks(content),
   };
 }
 
@@ -206,7 +206,7 @@ export function getNotesByPage(page: string): NoteMeta[] {
     notes.push({
       slug,
       page,
-      title: extractTitle(slug, content),
+      title: data.title ?? extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
