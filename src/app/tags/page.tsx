@@ -6,16 +6,16 @@ export default function TagsPage() {
 
   return (
     <section>
-      <h1 className="text-xl font-bold mb-6">タグ一覧</h1>
+      <h1 className="mb-6 text-xl font-bold">Tags</h1>
       <div className="flex flex-wrap gap-2">
         {tags.map(({ tag, count }) => (
           <Link
             key={tag}
             href={`/tags/${encodeURIComponent(tag)}`}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 rounded text-sm transition-colors text-neutral-900 dark:text-neutral-100"
+            className="rounded-full border border-[var(--border)] bg-[var(--card-bg)] px-4 py-2 text-sm text-[var(--fg)] transition-all duration-200 hover:border-[var(--accent)] hover:text-[var(--accent)]"
           >
-            <span>{tag}</span>
-            <span className="text-neutral-400 dark:text-neutral-500 text-xs">{count}</span>
+            {tag}
+            <span className="ml-1.5 text-xs text-[var(--sub)]">{count}</span>
           </Link>
         ))}
       </div>
