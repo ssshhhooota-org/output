@@ -23,7 +23,7 @@ export default function NoteListPage() {
                 aria-label={p.replace(/_/g, " ")}
               />
               <div className="mb-1 text-xs text-[var(--sub)]">
-                {notes.length} notes
+                {notes.length} pages
               </div>
               <h2 className="text-base font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
                 {p.replace(/_/g, " ")}
