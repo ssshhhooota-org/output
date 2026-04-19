@@ -29,6 +29,10 @@ export function NoteLayout({
   const [activeId, setActiveId] = useState("");
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [currentSlug]);
+
+  useEffect(() => {
     if (headings.length === 0) return;
     const HEADER_OFFSET = 80;
 
@@ -59,20 +63,21 @@ export function NoteLayout({
   }
 
   const pageList = (
-    <div className="border-l-2 border-[var(--accent-light)] pl-4">
-      <p className="mb-2 text-xs font-semibold text-[var(--accent)]">
+    <div>
+      <p className="mb-3 text-xs font-semibold text-[var(--accent)] tracking-wide uppercase">
         {currentPage.replace(/_/g, " ")}
       </p>
-      <ul className="flex flex-col gap-1.5 text-sm">
+      <ul className="flex flex-col gap-1 text-sm">
         {notes.map((n) => (
           <li key={n.slug}>
             <Link
               href={`/note/${currentPage}/${n.slug}`}
               onClick={() => setPagesOpen(false)}
-              className={`block transition-colors ${
+              title={n.title}
+              className={`block rounded-lg px-3 py-2 transition-all ${
                 n.slug === currentSlug
-                  ? "text-[var(--accent)] font-medium"
-                  : "text-[var(--sub)] hover:text-[var(--fg)]"
+                  ? "bg-[var(--accent-surface)] text-[var(--accent)] font-medium border border-[var(--accent)]/20"
+                  : "text-[var(--sub)] hover:bg-[var(--accent-surface)] hover:text-[var(--fg)]"
               }`}
             >
               {n.title}

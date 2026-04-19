@@ -80,13 +80,7 @@ export default async function NoteSlugPage({
     >
       <article>
         <header className="mb-8">
-          <div className="flex items-center gap-3 text-sm text-[var(--sub)]">
-            <span className="text-xs font-semibold text-[var(--accent)]">
-              note
-            </span>
-            <span>{page.replace(/_/g, " ")}</span>
-          </div>
-          <h1 className="mt-1 text-2xl font-bold">{meta.title}</h1>
+          <h1 className="text-2xl font-bold">{meta.title}</h1>
           {meta.tags.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
               {meta.tags.map((tag) => (
