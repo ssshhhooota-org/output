@@ -20,7 +20,7 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/theme-init.js" />
       </head>
-      <body className="mx-auto max-w-4xl px-4 antialiased">
+      <body className="mx-auto max-w-5xl px-4 antialiased">
         <Header />
         <main className="min-h-[60vh] py-8">
           <PageTransition>{children}</PageTransition>
