@@ -19,8 +19,10 @@ export default async function TagPage({
 
   return (
     <section>
-      <h1 className="text-xl font-bold mb-6">#{decoded}</h1>
-      <div className="divide-y divide-neutral-200 dark:divide-neutral-700">
+      <h1 className="mb-6 text-xl font-bold text-[var(--accent)]">
+        #{decoded}
+      </h1>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {entries.map((entry) => (
           <PostCard
             key={`${entry.basePath}-${entry.slug}`}
