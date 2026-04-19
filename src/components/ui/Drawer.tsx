@@ -21,6 +21,7 @@ export function Drawer({ open, onClose, title, children }: DrawerProps) {
       )}
       <nav
         aria-label={title}
+        aria-hidden={!open}
         className={`fixed bottom-0 left-0 z-50 max-h-[70vh] w-full overflow-y-auto rounded-t-2xl bg-[var(--bg)] p-6 shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
