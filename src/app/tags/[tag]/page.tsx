@@ -3,7 +3,7 @@ import { PostCard } from "@/components/PostCard";
 import { notFound } from "next/navigation";
 
 export function generateStaticParams() {
-  return getAllTags().map(({ tag }) => ({ tag: encodeURIComponent(tag) }));
+  return getAllTags().map(({ tag }) => ({ tag }));
 }
 
 export default async function TagPage({
