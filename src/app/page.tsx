@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <section>
       <h1 className="sr-only">記事一覧</h1>
-      <div className="divide-y divide-neutral-200 dark:divide-neutral-700">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {all.map((entry) => (
           <PostCard
             key={`${entry.basePath}-${entry.slug}`}
