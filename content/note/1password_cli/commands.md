@@ -1,10 +1,13 @@
 ---
 created: 2026/04/19 15:17
 updated: 2026/04/19 17:11
+public: true
 tags:
   - 1password cli
 title: commands
 ---
+
+# 1password commands
 
 `op -h` のGeneral Commands
 

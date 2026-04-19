@@ -149,14 +149,14 @@ export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })
 }
 
 // Note
-// Notes are organized in subdirectories: content/note/<category>/<slug>.md
-export type NoteMeta = EntryMeta & { category: string };
+// Notes are organized in subdirectories: content/note/<topic>/<slug>.md
+export type NoteMeta = EntryMeta & { topic: string };
 
 function getNoteDir() {
   return path.join(CONTENT_DIR, "note");
 }
 
-export function getAllNoteCategories(): string[] {
+export function getAllNoteTopics(): string[] {
   const dir = getNoteDir();
   if (!fs.existsSync(dir)) return [];
   return fs
@@ -165,8 +165,8 @@ export function getAllNoteCategories(): string[] {
     .map((d) => d.name);
 }
 
-export function getNoteSlugs(category: string): string[] {
-  const dir = path.join(getNoteDir(), category);
+export function getNoteSlugs(topic: string): string[] {
+  const dir = path.join(getNoteDir(), topic);
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir)
@@ -175,17 +175,17 @@ export function getNoteSlugs(category: string): string[] {
 }
 
 export function getNoteBySlug(
-  category: string,
+  topic: string,
   slug: string
 ): { meta: NoteMeta; content: string } {
-  const filePath = path.join(getNoteDir(), category, `${slug}.md`);
+  const filePath = path.join(getNoteDir(), topic, `${slug}.md`);
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
   return {
     meta: {
       slug,
-      category,
+      topic,
       title: extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
@@ -196,25 +196,31 @@ export function getNoteBySlug(
   };
 }
 
-export function getAllNotes(): NoteMeta[] {
-  const categories = getAllNoteCategories();
+export function getNotesByTopic(topic: string): NoteMeta[] {
   const notes: NoteMeta[] = [];
-  for (const category of categories) {
-    for (const slug of getNoteSlugs(category)) {
-      const filePath = path.join(getNoteDir(), category, `${slug}.md`);
-      const raw = fs.readFileSync(filePath, "utf-8");
-      const { data, content } = matter(raw);
-      if (data.public === false) continue;
-      notes.push({
-        slug,
-        category,
-        title: extractTitle(slug, content),
-        created: parseDate(data.created),
-        updated: parseDate(data.updated),
-        tags: Array.isArray(data.tags) ? data.tags : [],
-        thumbnail: parseThumbnail(data.thumbnail),
-      });
-    }
+  for (const slug of getNoteSlugs(topic)) {
+    const filePath = path.join(getNoteDir(), topic, `${slug}.md`);
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const { data, content } = matter(raw);
+    if (data.public === false) continue;
+    notes.push({
+      slug,
+      topic,
+      title: extractTitle(slug, content),
+      created: parseDate(data.created),
+      updated: parseDate(data.updated),
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      thumbnail: parseThumbnail(data.thumbnail),
+    });
+  }
+  return notes.sort((a, b) => (a.created > b.created ? -1 : 1));
+}
+
+export function getAllNotes(): NoteMeta[] {
+  const topics = getAllNoteTopics();
+  const notes: NoteMeta[] = [];
+  for (const topic of topics) {
+    notes.push(...getNotesByTopic(topic));
   }
   return notes.sort((a, b) => (a.created > b.created ? -1 : 1));
 }
