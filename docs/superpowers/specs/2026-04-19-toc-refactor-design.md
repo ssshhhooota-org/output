@@ -39,7 +39,7 @@ src/
 ### `src/hooks/useActiveHeading.ts`
 
 ```ts
-function useActiveHeading(headings: TocHeading[]): string
+function useActiveHeading(headings: TocHeading[]): string;
 ```
 
 **責務:** スクロール位置に基づいてアクティブな見出しIDを返す
@@ -61,7 +61,7 @@ type DrawerProps = {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
-}
+};
 ```
 
 **責務:** モバイル向けボトムシートドロワーのUIを提供
@@ -79,7 +79,7 @@ type FloatingButtonProps = {
   "aria-label": string;
   position: "bottom-left" | "bottom-right";
   children: React.ReactNode;
-}
+};
 ```
 
 **責務:** 画面固定の丸いFABボタン
@@ -98,8 +98,8 @@ type FloatingButtonProps = {
 **エクスポート:**
 
 ```tsx
-export function TocSidebar({ headings }: { headings: TocHeading[] })
-export function TocDrawer({ headings }: { headings: TocHeading[] })
+export function TocSidebar({ headings }: { headings: TocHeading[] });
+export function TocDrawer({ headings }: { headings: TocHeading[] });
 ```
 
 - `TocSidebar`: `useActiveHeading` を使い、デスクトップ用サイドバーをレンダリング（`hidden lg:block`）
@@ -118,14 +118,14 @@ export function TocDrawer({ headings }: { headings: TocHeading[] })
 
 ## 変更ファイル一覧
 
-| ファイル | 変更種別 | 内容 |
-|---|---|---|
-| `src/hooks/useActiveHeading.ts` | 新規 | スクロール検出hook |
-| `src/components/ui/Drawer.tsx` | 新規 | 汎用ドロワー |
-| `src/components/ui/FloatingButton.tsx` | 新規 | 汎用FAB |
-| `src/components/TableOfContents.tsx` | 変更 | TocSidebar/TocDrawer にリファクタ |
-| `src/components/NoteLayout.tsx` | 変更 | 共有コンポーネントを使うよう更新 |
-| `src/app/blog/[slug]/page.tsx` | 変更 | import名を更新 |
+| ファイル                               | 変更種別 | 内容                              |
+| -------------------------------------- | -------- | --------------------------------- |
+| `src/hooks/useActiveHeading.ts`        | 新規     | スクロール検出hook                |
+| `src/components/ui/Drawer.tsx`         | 新規     | 汎用ドロワー                      |
+| `src/components/ui/FloatingButton.tsx` | 新規     | 汎用FAB                           |
+| `src/components/TableOfContents.tsx`   | 変更     | TocSidebar/TocDrawer にリファクタ |
+| `src/components/NoteLayout.tsx`        | 変更     | 共有コンポーネントを使うよう更新  |
+| `src/app/blog/[slug]/page.tsx`         | 変更     | import名を更新                    |
 
 ---
 

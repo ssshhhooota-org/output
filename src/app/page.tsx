@@ -2,19 +2,20 @@ import { getAllPosts, getAllScraps, getAllNotes, type EntryMeta } from "@/lib/po
 import { PostCard } from "@/components/PostCard";
 
 export default function Home() {
-  const posts: (EntryMeta & { basePath: string })[] = getAllPosts().map(
-    (e) => ({ ...e, basePath: "/blog" })
-  );
-  const scraps: (EntryMeta & { basePath: string })[] = getAllScraps().map(
-    (e) => ({ ...e, basePath: "/scrap" })
-  );
-  const notes: (EntryMeta & { basePath: string })[] = getAllNotes().map(
-    (e) => ({ ...e, basePath: `/note/${e.page}` })
-  );
+  const posts: (EntryMeta & { basePath: string })[] = getAllPosts().map((e) => ({
+    ...e,
+    basePath: "/blog",
+  }));
+  const scraps: (EntryMeta & { basePath: string })[] = getAllScraps().map((e) => ({
+    ...e,
+    basePath: "/scrap",
+  }));
+  const notes: (EntryMeta & { basePath: string })[] = getAllNotes().map((e) => ({
+    ...e,
+    basePath: `/note/${e.page}`,
+  }));
 
-  const all = [...posts, ...scraps, ...notes].sort((a, b) =>
-    b.created.localeCompare(a.created)
-  );
+  const all = [...posts, ...scraps, ...notes].sort((a, b) => b.created.localeCompare(a.created));
 
   return (
     <section>

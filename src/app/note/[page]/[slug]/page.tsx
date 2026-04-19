@@ -62,10 +62,7 @@ export default async function NoteSlugPage({
         remarkPlugins: [remarkGfm],
         rehypePlugins: [
           rehypeSlug,
-          [
-            rehypePrettyCode,
-            { theme: { light: "github-light", dark: "github-dark-dimmed" } },
-          ],
+          [rehypePrettyCode, { theme: { light: "github-light", dark: "github-dark-dimmed" } }],
         ],
       },
     },
@@ -96,9 +93,7 @@ export default async function NoteSlugPage({
           )}
         </header>
         <CodeBlockEnhancer>
-          <div className="prose prose-neutral max-w-none dark:prose-invert">
-            {mdxContent}
-          </div>
+          <div className="prose prose-neutral max-w-none dark:prose-invert">{mdxContent}</div>
         </CodeBlockEnhancer>
       </article>
     </NoteLayout>

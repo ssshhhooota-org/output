@@ -6,11 +6,7 @@ export function generateStaticParams() {
   return getAllTags().map(({ tag }) => ({ tag }));
 }
 
-export default async function TagPage({
-  params,
-}: {
-  params: Promise<{ tag: string }>;
-}) {
+export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag } = await params;
   const decoded = decodeURIComponent(tag);
   const entries = getEntriesByTag(decoded);
@@ -19,9 +15,7 @@ export default async function TagPage({
 
   return (
     <section>
-      <h1 className="mb-6 text-xl font-bold text-[var(--accent)]">
-        #{decoded}
-      </h1>
+      <h1 className="mb-6 text-xl font-bold text-[var(--accent)]">#{decoded}</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {entries.map((entry) => (
           <PostCard

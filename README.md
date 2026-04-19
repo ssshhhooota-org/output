@@ -45,7 +45,7 @@ thumbnail: "[[image.png]]"
 ```
 
 - `public: false` の記事は非公開
-- コードブロックのファイル名指定: `` ```ts:hoge.ts ``
+- コードブロックのファイル名指定: ` ```ts:hoge.ts `
 
 ## Development
 

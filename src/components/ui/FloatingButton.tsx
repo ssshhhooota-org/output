@@ -15,8 +15,7 @@ export function FloatingButton({
   position,
   children,
 }: FloatingButtonProps) {
-  const positionClass =
-    position === "bottom-left" ? "bottom-6 left-6" : "bottom-6 right-6";
+  const positionClass = position === "bottom-left" ? "bottom-6 left-6" : "bottom-6 right-6";
 
   return (
     <button

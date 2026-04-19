@@ -45,9 +45,7 @@ export function TocSidebar({ headings }: { headings: TocHeading[] }) {
     <nav aria-label="目次" className="hidden lg:block w-48 shrink-0">
       <div className="sticky top-24">
         <div className="border-l-2 border-[var(--accent)] pl-4">
-          <p className="mb-2 text-xs font-semibold text-[var(--accent)]">
-            目次
-          </p>
+          <p className="mb-2 text-xs font-semibold text-[var(--accent)]">目次</p>
           <TocList headings={headings} activeId={activeId} />
         </div>
       </div>
@@ -63,11 +61,7 @@ export function TocDrawer({ headings }: { headings: TocHeading[] }) {
 
   return (
     <>
-      <FloatingButton
-        onClick={() => setOpen(true)}
-        aria-label="目次を開く"
-        position="bottom-right"
-      >
+      <FloatingButton onClick={() => setOpen(true)} aria-label="目次を開く" position="bottom-right">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -85,11 +79,7 @@ export function TocDrawer({ headings }: { headings: TocHeading[] }) {
         </svg>
       </FloatingButton>
       <Drawer open={open} onClose={() => setOpen(false)} title="目次">
-        <TocList
-          headings={headings}
-          activeId={activeId}
-          onItemClick={() => setOpen(false)}
-        />
+        <TocList headings={headings} activeId={activeId} onItemClick={() => setOpen(false)} />
       </Drawer>
     </>
   );
