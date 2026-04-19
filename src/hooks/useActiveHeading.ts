@@ -14,7 +14,7 @@ export function useActiveHeading(headings: TocHeading[]): string {
       for (const heading of headings) {
         const el = document.getElementById(heading.id);
         if (!el) continue;
-        if (el.getBoundingClientRect().top <= HEADER_OFFSET + 4) {
+        if (el.getBoundingClientRect().top <= HEADER_OFFSET + 4) { // +4px tolerance for sub-pixel rendering
           current = heading.id;
         }
       }
