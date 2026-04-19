@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PageTransition } from "@/components/PageTransition";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -19,9 +20,11 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/theme-init.js" />
       </head>
-      <body className="mx-auto max-w-2xl px-4 antialiased">
+      <body className="mx-auto max-w-4xl px-4 antialiased">
         <Header />
-        <main className="min-h-[60vh] py-8">{children}</main>
+        <main className="min-h-[60vh] py-8">
+          <PageTransition>{children}</PageTransition>
+        </main>
         <Footer />
       </body>
     </html>
