@@ -9,26 +9,36 @@ export function TableOfContents({ headings }: { headings: TocHeading[] }) {
   useEffect(() => {
     if (headings.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        }
-      },
-      { rootMargin: "-80px 0px -75% 0px" }
-    );
+    const HEADER_OFFSET = 80;
 
-    for (const heading of headings) {
-      const el = document.getElementById(heading.id);
-      if (el) observer.observe(el);
+    function getActiveHeading() {
+      let current = "";
+      for (const heading of headings) {
+        const el = document.getElementById(heading.id);
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top <= HEADER_OFFSET + 4) {
+          current = heading.id;
+        }
+      }
+      return current;
     }
 
-    return () => observer.disconnect();
+    function onScroll() {
+      setActiveId(getActiveHeading());
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
   }, [headings]);
 
   if (headings.length === 0) return null;
+
+  function handleClick(id: string) {
+    setActiveId(id);
+  }
 
   return (
     <nav className="hidden lg:block">
@@ -42,6 +52,7 @@ export function TableOfContents({ headings }: { headings: TocHeading[] }) {
               <li key={h.id} className={h.level === 3 ? "ml-4" : ""}>
                 <a
                   href={`#${h.id}`}
+                  onClick={() => handleClick(h.id)}
                   className={`block transition-colors ${
                     activeId === h.id
                       ? "text-[var(--accent)] font-medium"
