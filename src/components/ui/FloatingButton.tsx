@@ -1,10 +1,12 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 type FloatingButtonProps = {
   onClick: () => void;
   "aria-label": string;
   position: "bottom-left" | "bottom-right";
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 export function FloatingButton({
@@ -18,6 +20,7 @@ export function FloatingButton({
 
   return (
     <button
+      type="button"
       onClick={onClick}
       aria-label={ariaLabel}
       className={`fixed ${positionClass} z-50 flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-[var(--accent)] text-white shadow-lg transition-transform hover:scale-105 active:scale-95 lg:hidden`}
