@@ -1,12 +1,11 @@
 ---
 created: 2026/03/17 22:23
-updated: 2026/03/17 22:52
+updated: 2026/04/19 17:27
 public: true
 tags:
-  - claude code
+  - Claude Code
+title: Claude CodeにPRのレビューをしてもらう
 ---
-
-# Claude CodeにPRのレビューをしてもらう
 
 ## 実現方法
 

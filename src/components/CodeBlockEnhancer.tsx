@@ -38,7 +38,7 @@ export function CodeBlockEnhancer({ children }: { children: React.ReactNode }) {
       // Copy ボタン
       const btn = document.createElement("button");
       btn.className =
-        "absolute top-1.5 right-2 px-2 py-1 text-xs text-neutral-400 hover:text-neutral-600 bg-white/80 border border-neutral-200 rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-10";
+        "absolute top-1.5 right-2 px-2 py-1 text-xs text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300 bg-[var(--card-bg)]/80 border border-[var(--border)] rounded cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity z-10";
       btn.textContent = "Copy";
       btn.addEventListener("click", () => {
         const code = pre.querySelector("code");

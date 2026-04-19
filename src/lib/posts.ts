@@ -111,7 +111,7 @@ function getAllEntries(kind: ContentKind): EntryMeta[] {
       };
     })
     .filter((e): e is EntryMeta => e !== null)
-    .sort((a, b) => (a.created > b.created ? -1 : 1));
+    .sort((a, b) => b.created.localeCompare(a.created));
 }
 
 // Blog
@@ -145,5 +145,82 @@ export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })
   const scraps = getAllEntries("scrap")
     .filter((e) => e.tags.includes(tag))
     .map((e) => ({ ...e, basePath: "/scrap" }));
-  return [...posts, ...scraps].sort((a, b) => (a.created > b.created ? -1 : 1));
+  return [...posts, ...scraps].sort((a, b) => b.created.localeCompare(a.created));
+}
+
+// Note
+// Notes are organized in subdirectories: content/note/<page>/<slug>.md
+export type NoteMeta = EntryMeta & { page: string };
+
+function getNoteDir() {
+  return path.join(CONTENT_DIR, "note");
+}
+
+export function getAllNotePages(): string[] {
+  const dir = getNoteDir();
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name);
+}
+
+export function getNoteSlugs(page: string): string[] {
+  const dir = path.join(getNoteDir(), page);
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => file.replace(/\.md$/, ""));
+}
+
+export function getNoteBySlug(
+  page: string,
+  slug: string
+): { meta: NoteMeta; content: string } {
+  const filePath = path.join(getNoteDir(), page, `${slug}.md`);
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(raw);
+
+  return {
+    meta: {
+      slug,
+      page,
+      title: extractTitle(slug, content),
+      created: parseDate(data.created),
+      updated: parseDate(data.updated),
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      thumbnail: parseThumbnail(data.thumbnail),
+    },
+    content: normalizeCodeBlocks(stripTitle(content)),
+  };
+}
+
+export function getNotesByPage(page: string): NoteMeta[] {
+  const notes: NoteMeta[] = [];
+  for (const slug of getNoteSlugs(page)) {
+    const filePath = path.join(getNoteDir(), page, `${slug}.md`);
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const { data, content } = matter(raw);
+    if (data.public === false) continue;
+    notes.push({
+      slug,
+      page,
+      title: extractTitle(slug, content),
+      created: parseDate(data.created),
+      updated: parseDate(data.updated),
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      thumbnail: parseThumbnail(data.thumbnail),
+    });
+  }
+  return notes.sort((a, b) => b.created.localeCompare(a.created));
+}
+
+export function getAllNotes(): NoteMeta[] {
+  const pages = getAllNotePages();
+  const notes: NoteMeta[] = [];
+  for (const page of pages) {
+    notes.push(...getNotesByPage(page));
+  }
+  return notes.sort((a, b) => b.created.localeCompare(a.created));
 }

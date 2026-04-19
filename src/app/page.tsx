@@ -1,4 +1,4 @@
-import { getAllPosts, getAllScraps, type EntryMeta } from "@/lib/posts";
+import { getAllPosts, getAllScraps, getAllNotes, type EntryMeta } from "@/lib/posts";
 import { PostCard } from "@/components/PostCard";
 
 export default function Home() {
@@ -8,15 +8,18 @@ export default function Home() {
   const scraps: (EntryMeta & { basePath: string })[] = getAllScraps().map(
     (e) => ({ ...e, basePath: "/scrap" })
   );
+  const notes: (EntryMeta & { basePath: string })[] = getAllNotes().map(
+    (e) => ({ ...e, basePath: `/note/${e.page}` })
+  );
 
-  const all = [...posts, ...scraps].sort((a, b) =>
-    a.created > b.created ? -1 : 1
+  const all = [...posts, ...scraps, ...notes].sort((a, b) =>
+    b.created.localeCompare(a.created)
   );
 
   return (
     <section>
       <h1 className="sr-only">記事一覧</h1>
-      <div className="divide-y divide-neutral-200 dark:divide-neutral-700">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {all.map((entry) => (
           <PostCard
             key={`${entry.basePath}-${entry.slug}`}

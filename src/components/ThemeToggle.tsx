@@ -25,7 +25,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label={isDark ? "ライトモードに切り替え" : "ダークモードに切り替え"}
-      className="p-1.5 rounded text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors cursor-pointer"
+      className="p-1.5 rounded text-[var(--sub)] hover:text-[var(--accent)] transition-colors cursor-pointer"
     >
       {isDark ? (
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

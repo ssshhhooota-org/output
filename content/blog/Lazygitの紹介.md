@@ -6,6 +6,7 @@ tags:
   - tui
 public: true
 thumbnail:
+title: Lazygitの紹介
 ---
 
 # lazysqlの紹介
