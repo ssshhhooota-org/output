@@ -71,6 +71,19 @@ export default async function NotePage({
           )}
         </div>
         <h1 className="mt-1 text-2xl font-bold">{meta.title}</h1>
+        {meta.tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {meta.tags.map((tag) => (
+              <a
+                key={tag}
+                href={`/tags/${encodeURIComponent(tag)}`}
+                className="rounded-full bg-[var(--accent-light)] px-2.5 py-0.5 text-xs text-[var(--accent)] transition-colors hover:bg-[var(--accent)] hover:text-white"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        )}
       </header>
       <CodeBlockEnhancer>
         <div className="prose prose-neutral max-w-none dark:prose-invert">
