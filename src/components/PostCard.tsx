@@ -8,32 +8,42 @@ export function PostCard({
   entry: EntryMeta;
   basePath: string;
 }) {
+  const isBlog = basePath === "/blog";
+
   return (
-    <article className="py-4">
-      <Link href={`${basePath}/${entry.slug}`} className="group block">
-        <div className="flex items-center gap-2">
-          <time className="text-sm text-neutral-500">{entry.created}</time>
-          <span className={`text-xs px-1.5 py-0.5 rounded ${basePath === "/blog" ? "bg-neutral-200 text-neutral-600 dark:bg-neutral-700 dark:text-neutral-300" : "bg-amber-100 text-amber-700 dark:bg-amber-900 dark:text-amber-300"}`}>
-            {basePath === "/blog" ? "blog" : "scrap"}
+    <article>
+      <Link
+        href={`${basePath}/${entry.slug}`}
+        className="group block rounded-lg border border-[var(--border)] bg-[var(--card-bg)] p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-md"
+      >
+        <div className="mb-2 flex items-center gap-2">
+          <span
+            className={`text-xs font-semibold ${
+              isBlog
+                ? "text-[var(--accent)]"
+                : "text-[var(--amber)]"
+            }`}
+          >
+            {isBlog ? "blog" : "scrap"}
           </span>
+          <span className="text-xs text-[var(--sub)]">{entry.created}</span>
         </div>
-        <h2 className="text-lg font-medium group-hover:underline">
+        <h2 className="text-base font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
           {entry.title}
         </h2>
+        {entry.tags.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-1.5">
+            {entry.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full bg-[var(--accent-light)] px-2.5 py-0.5 text-xs text-[var(--accent)]"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </Link>
-      {entry.tags.length > 0 && (
-        <div className="mt-1 flex flex-wrap gap-1">
-          {entry.tags.map((tag) => (
-            <Link
-              key={tag}
-              href={`/tags/${encodeURIComponent(tag)}`}
-              className="text-xs text-neutral-500 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:text-neutral-400 px-2 py-0.5 rounded transition-colors"
-            >
-              {tag}
-            </Link>
-          ))}
-        </div>
-      )}
     </article>
   );
 }
