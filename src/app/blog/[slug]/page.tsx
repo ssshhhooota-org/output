@@ -5,8 +5,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { getPostBySlug, getPostSlugs, extractHeadings } from "@/lib/posts";
 import { CodeBlockEnhancer } from "@/components/CodeBlockEnhancer";
 import {
-  TableOfContents,
-  MobileTocButton,
+  TocSidebar,
+  TocDrawer,
 } from "@/components/TableOfContents";
 
 export async function generateStaticParams() {
@@ -85,8 +85,8 @@ export default async function PostPage({
           </div>
         </CodeBlockEnhancer>
       </article>
-      <TableOfContents headings={headings} />
-      <MobileTocButton headings={headings} />
+      <TocSidebar headings={headings} />
+      <TocDrawer headings={headings} />
     </div>
   );
 }
