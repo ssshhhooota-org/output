@@ -2,7 +2,7 @@
 created: 2026/04/08 23:18
 updated: 2026/04/19 17:12
 tags: 
-  - ClaudeCode
+  - Claude Code
   - Git
   - GitHub
 public: true
