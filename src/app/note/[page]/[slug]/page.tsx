@@ -2,37 +2,57 @@ import { compileMDX } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
-import { getPostBySlug, getPostSlugs, extractHeadings } from "@/lib/posts";
-import { CodeBlockEnhancer } from "@/components/CodeBlockEnhancer";
 import {
-  TableOfContents,
-  MobileTocButton,
-} from "@/components/TableOfContents";
+  getAllNotePages,
+  getNotesByPage,
+  getNoteBySlug,
+  getNoteSlugs,
+  extractHeadings,
+} from "@/lib/posts";
+import { CodeBlockEnhancer } from "@/components/CodeBlockEnhancer";
+import { NoteLayout } from "@/components/NoteLayout";
+import { notFound } from "next/navigation";
 
-export async function generateStaticParams() {
-  return getPostSlugs().map((slug) => ({ slug }));
+export function generateStaticParams() {
+  const pages = getAllNotePages();
+  const params: { page: string; slug: string }[] = [];
+  for (const page of pages) {
+    for (const slug of getNoteSlugs(page)) {
+      params.push({ page, slug });
+    }
+  }
+  return params;
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ page: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const { meta } = getPostBySlug(slug);
+  const { page, slug } = await params;
+  const { meta } = getNoteBySlug(page, slug);
   return {
-    title: `${meta.title} | ssshhhooota blog`,
+    title: `${meta.title} | ${page.replace(/_/g, " ")} | ssshhhooota blog`,
   };
 }
 
-export default async function PostPage({
+export default async function NoteSlugPage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ page: string; slug: string }>;
 }) {
-  const { slug } = await params;
-  const { meta, content } = getPostBySlug(slug);
+  const { page, slug } = await params;
+
+  let noteData;
+  try {
+    noteData = getNoteBySlug(page, slug);
+  } catch {
+    notFound();
+  }
+
+  const { meta, content } = noteData;
   const headings = extractHeadings(content);
+  const allNotes = getNotesByPage(page);
 
   const { content: mdxContent } = await compileMDX({
     source: content,
@@ -52,17 +72,19 @@ export default async function PostPage({
   });
 
   return (
-    <div className="flex gap-8">
-      <article className="min-w-0 flex-1">
+    <NoteLayout
+      currentPage={page}
+      currentSlug={slug}
+      notes={allNotes.map((n) => ({ slug: n.slug, title: n.title }))}
+      headings={headings}
+    >
+      <article>
         <header className="mb-8">
           <div className="flex items-center gap-3 text-sm text-[var(--sub)]">
             <span className="text-xs font-semibold text-[var(--accent)]">
-              blog
+              note
             </span>
-            <time>作成: {meta.created}</time>
-            {meta.updated && meta.updated !== meta.created && (
-              <time>更新: {meta.updated}</time>
-            )}
+            <span>{page.replace(/_/g, " ")}</span>
           </div>
           <h1 className="mt-1 text-2xl font-bold">{meta.title}</h1>
           {meta.tags.length > 0 && (
@@ -85,8 +107,6 @@ export default async function PostPage({
           </div>
         </CodeBlockEnhancer>
       </article>
-      <TableOfContents headings={headings} />
-      <MobileTocButton headings={headings} />
-    </div>
+    </NoteLayout>
   );
 }
