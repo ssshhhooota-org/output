@@ -14,11 +14,13 @@ export function Drawer({ open, onClose, title, children }: DrawerProps) {
     <>
       {open && (
         <div
+          aria-hidden="true"
           className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm lg:hidden"
           onClick={onClose}
         />
       )}
       <nav
+        aria-label={title}
         className={`fixed bottom-0 left-0 z-50 max-h-[70vh] w-full overflow-y-auto rounded-t-2xl bg-[var(--bg)] p-6 shadow-2xl transition-transform duration-300 ease-out lg:hidden ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
