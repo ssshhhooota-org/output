@@ -20,12 +20,14 @@ export default function RootLayout({
         {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script src="/theme-init.js" />
       </head>
-      <body className="mx-auto flex min-h-dvh max-w-5xl flex-col px-4 antialiased">
+      <body className="flex min-h-dvh flex-col antialiased">
         <Header />
-        <main className="flex-1 py-8">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
           <PageTransition>{children}</PageTransition>
         </main>
-        <Footer />
+        <div className="mt-auto mx-auto w-full max-w-5xl px-4">
+          <Footer />
+        </div>
       </body>
     </html>
   );
