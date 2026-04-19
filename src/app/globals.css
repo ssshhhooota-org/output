@@ -4,14 +4,14 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg: #fafaf9;
+  --bg: #f5f5f4;
   --fg: #1c1917;
   --sub: #78716c;
-  --border: #e7e5e4;
+  --border: #d6d3d1;
   --accent: #0d9488;
   --accent-light: #ccfbf1;
-  --accent-surface: #f0fdfa;
-  --card-bg: #ffffff;
+  --accent-surface: #e6f7f5;
+  --card-bg: #fafaf9;
   --amber: #d97706;
   --amber-light: #fef3c7;
 }
@@ -32,6 +32,11 @@
 body {
   background-color: var(--bg);
   color: var(--fg);
+}
+
+/* Offset anchor scroll for sticky header */
+h2[id], h3[id] {
+  scroll-margin-top: 5rem;
 }
 
 /* Code block wrapper (created by CodeBlockEnhancer) */
@@ -69,7 +74,6 @@ pre[data-theme] {
   padding: 1rem;
   border-radius: 0.375rem;
   border: 1px solid var(--border);
-  background-color: var(--card-bg) !important;
   overflow-x: auto;
   font-size: 0.875rem;
   line-height: 1.7;
@@ -103,7 +107,7 @@ html:not(.dark) pre[data-theme="dark"] {
   font-size: 0.8em;
   position: sticky;
   left: 0;
-  background-color: var(--card-bg);
+  background-color: inherit;
   box-sizing: border-box;
 }
 

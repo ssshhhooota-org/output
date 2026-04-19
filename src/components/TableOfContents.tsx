@@ -17,7 +17,7 @@ export function TableOfContents({ headings }: { headings: TocHeading[] }) {
           }
         }
       },
-      { rootMargin: "-80px 0px -80% 0px" }
+      { rootMargin: "-5rem 0px -75% 0px" }
     );
 
     for (const heading of headings) {
