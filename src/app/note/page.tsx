@@ -1,32 +1,32 @@
 import Link from "next/link";
-import { getAllNoteTopics, getNotesByTopic } from "@/lib/posts";
+import { getAllNotePages, getNotesByPage } from "@/lib/posts";
 
 export default function NoteListPage() {
-  const topics = getAllNoteTopics();
+  const pages = getAllNotePages();
 
   return (
     <section>
       <h1 className="mb-6 text-xl font-bold">Note</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {topics.map((topic) => {
-          const notes = getNotesByTopic(topic);
+        {pages.map((p) => {
+          const notes = getNotesByPage(p);
           const tags = [...new Set(notes.flatMap((n) => n.tags))];
 
           return (
             <div
-              key={topic}
+              key={p}
               className="group relative rounded-lg border border-[var(--border)] bg-[var(--card-bg)] p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-md"
             >
               <Link
-                href={`/note/${topic}`}
+                href={`/note/${p}`}
                 className="absolute inset-0 z-0"
-                aria-label={topic.replace(/_/g, " ")}
+                aria-label={p.replace(/_/g, " ")}
               />
               <div className="mb-1 text-xs text-[var(--sub)]">
                 {notes.length} notes
               </div>
               <h2 className="text-base font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
-                {topic.replace(/_/g, " ")}
+                {p.replace(/_/g, " ")}
               </h2>
               {tags.length > 0 && (
                 <div className="relative z-10 mt-3 flex flex-wrap gap-1.5">

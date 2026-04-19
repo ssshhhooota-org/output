@@ -149,14 +149,14 @@ export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })
 }
 
 // Note
-// Notes are organized in subdirectories: content/note/<topic>/<slug>.md
-export type NoteMeta = EntryMeta & { topic: string };
+// Notes are organized in subdirectories: content/note/<page>/<slug>.md
+export type NoteMeta = EntryMeta & { page: string };
 
 function getNoteDir() {
   return path.join(CONTENT_DIR, "note");
 }
 
-export function getAllNoteTopics(): string[] {
+export function getAllNotePages(): string[] {
   const dir = getNoteDir();
   if (!fs.existsSync(dir)) return [];
   return fs
@@ -165,8 +165,8 @@ export function getAllNoteTopics(): string[] {
     .map((d) => d.name);
 }
 
-export function getNoteSlugs(topic: string): string[] {
-  const dir = path.join(getNoteDir(), topic);
+export function getNoteSlugs(page: string): string[] {
+  const dir = path.join(getNoteDir(), page);
   if (!fs.existsSync(dir)) return [];
   return fs
     .readdirSync(dir)
@@ -175,17 +175,17 @@ export function getNoteSlugs(topic: string): string[] {
 }
 
 export function getNoteBySlug(
-  topic: string,
+  page: string,
   slug: string
 ): { meta: NoteMeta; content: string } {
-  const filePath = path.join(getNoteDir(), topic, `${slug}.md`);
+  const filePath = path.join(getNoteDir(), page, `${slug}.md`);
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
 
   return {
     meta: {
       slug,
-      topic,
+      page,
       title: extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
@@ -196,16 +196,16 @@ export function getNoteBySlug(
   };
 }
 
-export function getNotesByTopic(topic: string): NoteMeta[] {
+export function getNotesByPage(page: string): NoteMeta[] {
   const notes: NoteMeta[] = [];
-  for (const slug of getNoteSlugs(topic)) {
-    const filePath = path.join(getNoteDir(), topic, `${slug}.md`);
+  for (const slug of getNoteSlugs(page)) {
+    const filePath = path.join(getNoteDir(), page, `${slug}.md`);
     const raw = fs.readFileSync(filePath, "utf-8");
     const { data, content } = matter(raw);
     if (data.public === false) continue;
     notes.push({
       slug,
-      topic,
+      page,
       title: extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
@@ -217,10 +217,10 @@ export function getNotesByTopic(topic: string): NoteMeta[] {
 }
 
 export function getAllNotes(): NoteMeta[] {
-  const topics = getAllNoteTopics();
+  const pages = getAllNotePages();
   const notes: NoteMeta[] = [];
-  for (const topic of topics) {
-    notes.push(...getNotesByTopic(topic));
+  for (const page of pages) {
+    notes.push(...getNotesByPage(page));
   }
   return notes.sort((a, b) => (a.created > b.created ? -1 : 1));
 }
