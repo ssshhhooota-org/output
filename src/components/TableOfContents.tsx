@@ -33,7 +33,7 @@ export function TableOfContents({ headings }: { headings: TocHeading[] }) {
   return (
     <nav className="hidden lg:block">
       <div className="sticky top-24">
-        <div className="border-l-2 border-[var(--accent-light)] pl-4">
+        <div className="border-l-2 border-[var(--accent)] pl-4">
           <p className="mb-2 text-xs font-semibold text-[var(--accent)]">
             目次
           </p>
