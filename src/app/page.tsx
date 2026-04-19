@@ -13,7 +13,7 @@ export default function Home() {
   );
 
   const all = [...posts, ...scraps, ...notes].sort((a, b) =>
-    a.created > b.created ? -1 : 1
+    b.created.localeCompare(a.created)
   );
 
   return (

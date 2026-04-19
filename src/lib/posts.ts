@@ -111,7 +111,7 @@ function getAllEntries(kind: ContentKind): EntryMeta[] {
       };
     })
     .filter((e): e is EntryMeta => e !== null)
-    .sort((a, b) => (a.created > b.created ? -1 : 1));
+    .sort((a, b) => b.created.localeCompare(a.created));
 }
 
 // Blog
@@ -145,7 +145,7 @@ export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })
   const scraps = getAllEntries("scrap")
     .filter((e) => e.tags.includes(tag))
     .map((e) => ({ ...e, basePath: "/scrap" }));
-  return [...posts, ...scraps].sort((a, b) => (a.created > b.created ? -1 : 1));
+  return [...posts, ...scraps].sort((a, b) => b.created.localeCompare(a.created));
 }
 
 // Note
@@ -213,7 +213,7 @@ export function getNotesByPage(page: string): NoteMeta[] {
       thumbnail: parseThumbnail(data.thumbnail),
     });
   }
-  return notes.sort((a, b) => (a.created > b.created ? -1 : 1));
+  return notes.sort((a, b) => b.created.localeCompare(a.created));
 }
 
 export function getAllNotes(): NoteMeta[] {
@@ -222,5 +222,5 @@ export function getAllNotes(): NoteMeta[] {
   for (const page of pages) {
     notes.push(...getNotesByPage(page));
   }
-  return notes.sort((a, b) => (a.created > b.created ? -1 : 1));
+  return notes.sort((a, b) => b.created.localeCompare(a.created));
 }

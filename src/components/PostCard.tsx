@@ -8,7 +8,7 @@ export function PostCard({
   entry: EntryMeta;
   basePath: string;
 }) {
-  const label = basePath === "/blog" ? "blog" : basePath.startsWith("/note") ? "note" : "scrap";
+  const label = basePath === "/blog" ? "blog" : basePath === "/scrap" ? "scrap" : "note";
   const labelColor = label === "scrap" ? "text-[var(--amber)]" : "text-[var(--accent)]";
 
   return (
