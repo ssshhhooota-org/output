@@ -147,3 +147,74 @@ export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })
     .map((e) => ({ ...e, basePath: "/scrap" }));
   return [...posts, ...scraps].sort((a, b) => (a.created > b.created ? -1 : 1));
 }
+
+// Note
+// Notes are organized in subdirectories: content/note/<category>/<slug>.md
+export type NoteMeta = EntryMeta & { category: string };
+
+function getNoteDir() {
+  return path.join(CONTENT_DIR, "note");
+}
+
+export function getAllNoteCategories(): string[] {
+  const dir = getNoteDir();
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((d) => d.isDirectory())
+    .map((d) => d.name);
+}
+
+export function getNoteSlugs(category: string): string[] {
+  const dir = path.join(getNoteDir(), category);
+  if (!fs.existsSync(dir)) return [];
+  return fs
+    .readdirSync(dir)
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => file.replace(/\.md$/, ""));
+}
+
+export function getNoteBySlug(
+  category: string,
+  slug: string
+): { meta: NoteMeta; content: string } {
+  const filePath = path.join(getNoteDir(), category, `${slug}.md`);
+  const raw = fs.readFileSync(filePath, "utf-8");
+  const { data, content } = matter(raw);
+
+  return {
+    meta: {
+      slug,
+      category,
+      title: extractTitle(slug, content),
+      created: parseDate(data.created),
+      updated: parseDate(data.updated),
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      thumbnail: parseThumbnail(data.thumbnail),
+    },
+    content: normalizeCodeBlocks(stripTitle(content)),
+  };
+}
+
+export function getAllNotes(): NoteMeta[] {
+  const categories = getAllNoteCategories();
+  const notes: NoteMeta[] = [];
+  for (const category of categories) {
+    for (const slug of getNoteSlugs(category)) {
+      const filePath = path.join(getNoteDir(), category, `${slug}.md`);
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const { data, content } = matter(raw);
+      if (data.public === false) continue;
+      notes.push({
+        slug,
+        category,
+        title: extractTitle(slug, content),
+        created: parseDate(data.created),
+        updated: parseDate(data.updated),
+        tags: Array.isArray(data.tags) ? data.tags : [],
+        thumbnail: parseThumbnail(data.thumbnail),
+      });
+    }
+  }
+  return notes.sort((a, b) => (a.created > b.created ? -1 : 1));
+}
