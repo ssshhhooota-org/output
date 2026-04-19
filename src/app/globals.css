@@ -29,6 +29,10 @@
   --amber-light: rgba(217, 119, 6, 0.15);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--bg);
   color: var(--fg);
