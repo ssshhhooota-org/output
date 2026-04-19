@@ -75,7 +75,7 @@ function getEntry(kind: ContentKind, slug: string): { meta: EntryMeta; content: 
   return {
     meta: {
       slug,
-      title: extractTitle(slug, content),
+      title: data.title || extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
@@ -103,7 +103,7 @@ function getAllEntries(kind: ContentKind): EntryMeta[] {
       if (data.public === false) return null;
       return {
         slug,
-        title: extractTitle(slug, content),
+        title: data.title || extractTitle(slug, content),
         created: parseDate(data.created),
         updated: parseDate(data.updated),
         tags: Array.isArray(data.tags) ? data.tags : [],
