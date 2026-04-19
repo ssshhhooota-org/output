@@ -68,4 +68,3 @@ dotfilesの構成要素としてGit管理しても良い
    - アンインストールしない場合: 次のBrewfile の更新へ
 4. Brewfile の更新
    - `brew bundle dump --global --force --describe`
-
