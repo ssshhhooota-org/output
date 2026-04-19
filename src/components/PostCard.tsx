@@ -8,7 +8,8 @@ export function PostCard({
   entry: EntryMeta;
   basePath: string;
 }) {
-  const isBlog = basePath === "/blog";
+  const label = basePath === "/blog" ? "blog" : basePath.startsWith("/note") ? "note" : "scrap";
+  const labelColor = label === "scrap" ? "text-[var(--amber)]" : "text-[var(--accent)]";
 
   return (
     <article className="group relative rounded-lg border border-[var(--border)] bg-[var(--card-bg)] p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--accent)] hover:shadow-md">
@@ -18,14 +19,8 @@ export function PostCard({
         aria-label={entry.title}
       />
       <div className="mb-2 flex items-center gap-2">
-        <span
-          className={`text-xs font-semibold ${
-            isBlog
-              ? "text-[var(--accent)]"
-              : "text-[var(--amber)]"
-          }`}
-        >
-          {isBlog ? "blog" : "scrap"}
+        <span className={`text-xs font-semibold ${labelColor}`}>
+          {label}
         </span>
         <span className="text-xs text-[var(--sub)]">{entry.created}</span>
       </div>

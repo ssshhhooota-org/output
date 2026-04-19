@@ -1,4 +1,4 @@
-import { getAllPosts, getAllScraps, type EntryMeta } from "@/lib/posts";
+import { getAllPosts, getAllScraps, getAllNotes, type EntryMeta } from "@/lib/posts";
 import { PostCard } from "@/components/PostCard";
 
 export default function Home() {
@@ -8,8 +8,11 @@ export default function Home() {
   const scraps: (EntryMeta & { basePath: string })[] = getAllScraps().map(
     (e) => ({ ...e, basePath: "/scrap" })
   );
+  const notes: (EntryMeta & { basePath: string })[] = getAllNotes().map(
+    (e) => ({ ...e, basePath: `/note/${e.page}` })
+  );
 
-  const all = [...posts, ...scraps].sort((a, b) =>
+  const all = [...posts, ...scraps, ...notes].sort((a, b) =>
     a.created > b.created ? -1 : 1
   );
 
