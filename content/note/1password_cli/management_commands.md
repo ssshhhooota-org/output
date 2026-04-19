@@ -1,7 +1,9 @@
 ---
 created: 2026/04/18 16:25
-updated: 2026/04/19 15:13
+updated: 2026/04/19 17:12
 tags:
+  - 1password cli
+title: management commands
 ---
 
 `op -h` のManagement Commands

@@ -1,12 +1,12 @@
 ---
 created: 2025/11/06 23:01
-updated: 2026/02/15 12:07
+updated: 2026/04/19 17:11
 tags:
 public: true
 thumbnail: "[[019c051c-e2d4-74e1-97d8-d1828878d66f.png]]"
+title: AWSでルートユーザ利用時にSlack通知を行う
 ---
 
-## ルートユーザが使われたらSlack通知を行う
 
 ---
 

@@ -4,6 +4,7 @@ updated: 2026/02/15 12:07
 tags:
 public: true
 thumbnail: "[[019c0520-2fda-74ed-96c0-8faf1f5eecd2.png]]"
+title: Brewfileの運用
 ---
 
 複数のPCで環境を揃えるときに運用方法が確立されていれば、ミスをすることが減らせるし環境構築が素早く行えるのでまとめておく

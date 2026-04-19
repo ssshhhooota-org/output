@@ -1,15 +1,14 @@
 ---
 created: 2026/04/08 23:18
-updated: 2026/04/08 23:59
+updated: 2026/04/19 17:12
 tags: 
   - ClaudeCode
   - Git
   - GitHub
 public: true
 thumbnail:
+title: Claude CodeにGit操作をしてもらう最低限の設定
 ---
-
-# Claude CodeにGit操作をしてもらう最低限の設定
 
 https://github.com/ssshhhooota/git_with_claude_code/
 
