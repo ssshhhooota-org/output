@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import type { TocHeading } from "@/lib/posts";
 import { TocSidebar, TocDrawer } from "@/components/TableOfContents";
@@ -30,6 +30,10 @@ export function NoteLayout({
   const [pagesOpen, setPagesOpen] = useState(false);
   const pageTitle = currentPage.replace(/_/g, " ");
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [currentSlug]);
+
   return (
     <div className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen px-4 lg:px-8">
       <div className="flex gap-8">
@@ -44,6 +48,7 @@ export function NoteLayout({
                 <li key={n.slug}>
                   <Link
                     href={`/note/${currentPage}/${n.slug}`}
+                    title={n.title}
                     className={`block rounded-lg px-3 py-2 transition-all ${
                       n.slug === currentSlug
                         ? "bg-[var(--accent-surface)] text-[var(--accent)] font-medium border border-[var(--accent)]/20"
