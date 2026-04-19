@@ -20,13 +20,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export function NoteLayout({
-  currentPage,
-  currentSlug,
-  notes,
-  headings,
-  children,
-}: Props) {
+export function NoteLayout({ currentPage, currentSlug, notes, headings, children }: Props) {
   const [pagesOpen, setPagesOpen] = useState(false);
   const pageTitle = currentPage.replace(/_/g, " ");
 
@@ -96,11 +90,7 @@ export function NoteLayout({
       <TocDrawer headings={headings} />
 
       {/* Mobile: pages drawer */}
-      <Drawer
-        open={pagesOpen}
-        onClose={() => setPagesOpen(false)}
-        title={pageTitle}
-      >
+      <Drawer open={pagesOpen} onClose={() => setPagesOpen(false)} title={pageTitle}>
         <ul className="flex flex-col gap-2 text-sm">
           {notes.map((n) => (
             <li key={n.slug}>

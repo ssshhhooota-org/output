@@ -22,9 +22,7 @@ export default function NoteListPage() {
                 className="absolute inset-0 z-0"
                 aria-label={p.replace(/_/g, " ")}
               />
-              <div className="mb-1 text-xs text-[var(--sub)]">
-                {notes.length} pages
-              </div>
+              <div className="mb-1 text-xs text-[var(--sub)]">{notes.length} pages</div>
               <h2 className="text-base font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">
                 {p.replace(/_/g, " ")}
               </h2>

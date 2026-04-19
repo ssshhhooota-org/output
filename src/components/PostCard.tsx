@@ -1,13 +1,7 @@
 import Link from "next/link";
 import type { EntryMeta } from "@/lib/posts";
 
-export function PostCard({
-  entry,
-  basePath,
-}: {
-  entry: EntryMeta;
-  basePath: string;
-}) {
+export function PostCard({ entry, basePath }: { entry: EntryMeta; basePath: string }) {
   const label = basePath === "/blog" ? "blog" : basePath === "/scrap" ? "scrap" : "note";
   const labelColor = label === "scrap" ? "text-[var(--amber)]" : "text-[var(--accent)]";
 
@@ -19,9 +13,7 @@ export function PostCard({
         aria-label={entry.title}
       />
       <div className="mb-2 flex items-center gap-2">
-        <span className={`text-xs font-semibold ${labelColor}`}>
-          {label}
-        </span>
+        <span className={`text-xs font-semibold ${labelColor}`}>{label}</span>
         <span className="text-xs text-[var(--sub)]">{entry.created}</span>
       </div>
       <h2 className="text-base font-semibold text-[var(--fg)] group-hover:text-[var(--accent)] transition-colors">

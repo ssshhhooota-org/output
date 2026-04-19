@@ -174,10 +174,7 @@ export function getNoteSlugs(page: string): string[] {
     .map((file) => file.replace(/\.md$/, ""));
 }
 
-export function getNoteBySlug(
-  page: string,
-  slug: string
-): { meta: NoteMeta; content: string } {
+export function getNoteBySlug(page: string, slug: string): { meta: NoteMeta; content: string } {
   const filePath = path.join(getNoteDir(), page, `${slug}.md`);
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
