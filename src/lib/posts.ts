@@ -126,7 +126,7 @@ export const getAllScraps = () => getAllEntries("scrap");
 
 // Tags
 export function getAllTags(): { tag: string; count: number }[] {
-  const all = [...getAllEntries("blog"), ...getAllEntries("scrap")];
+  const all = [...getAllEntries("blog"), ...getAllEntries("scrap"), ...getAllNotes()];
   const counts = new Map<string, number>();
   for (const entry of all) {
     for (const tag of entry.tags) {
@@ -139,13 +139,11 @@ export function getAllTags(): { tag: string; count: number }[] {
 }
 
 export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })[] {
-  const posts = getAllEntries("blog")
-    .filter((e) => e.tags.includes(tag))
-    .map((e) => ({ ...e, basePath: "/blog" }));
-  const scraps = getAllEntries("scrap")
-    .filter((e) => e.tags.includes(tag))
-    .map((e) => ({ ...e, basePath: "/scrap" }));
-  return [...posts, ...scraps].sort((a, b) => b.created.localeCompare(a.created));
+  return [
+    ...getAllEntries("blog").filter((e) => e.tags.includes(tag)).map((e) => ({ ...e, basePath: "/blog" })),
+    ...getAllEntries("scrap").filter((e) => e.tags.includes(tag)).map((e) => ({ ...e, basePath: "/scrap" })),
+    ...getAllNotes().filter((e) => e.tags.includes(tag)).map((e) => ({ ...e, basePath: `/note/${e.page}` })),
+  ].sort((a, b) => b.created.localeCompare(a.created));
 }
 
 // Note
