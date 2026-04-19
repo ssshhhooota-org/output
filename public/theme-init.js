@@ -4,5 +4,5 @@
     if (t !== "light") {
       document.documentElement.classList.add("dark");
     }
-  } catch (e) {}
+  } catch {}
 })();
