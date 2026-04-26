@@ -19,5 +19,5 @@ export default async function NotePageRedirect({
 
   if (notes.length === 0) notFound();
 
-  redirect(`/note/${page}/${notes[0].slug}`);
+  redirect(`/note/${page}/${encodeURIComponent(notes[0].slug)}`);
 }

@@ -75,7 +75,7 @@ function getEntry(kind: ContentKind, slug: string): { meta: EntryMeta; content: 
   return {
     meta: {
       slug,
-      title: extractTitle(slug, content),
+      title: data.title ?? extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
@@ -103,7 +103,7 @@ function getAllEntries(kind: ContentKind): EntryMeta[] {
       if (data.public === false) return null;
       return {
         slug,
-        title: extractTitle(slug, content),
+        title: data.title ?? extractTitle(slug, content),
         created: parseDate(data.created),
         updated: parseDate(data.updated),
         tags: Array.isArray(data.tags) ? data.tags : [],
@@ -126,7 +126,7 @@ export const getAllScraps = () => getAllEntries("scrap");
 
 // Tags
 export function getAllTags(): { tag: string; count: number }[] {
-  const all = [...getAllEntries("blog"), ...getAllEntries("scrap")];
+  const all = [...getAllEntries("blog"), ...getAllEntries("scrap"), ...getAllNotes()];
   const counts = new Map<string, number>();
   for (const entry of all) {
     for (const tag of entry.tags) {
@@ -139,13 +139,11 @@ export function getAllTags(): { tag: string; count: number }[] {
 }
 
 export function getEntriesByTag(tag: string): (EntryMeta & { basePath: string })[] {
-  const posts = getAllEntries("blog")
-    .filter((e) => e.tags.includes(tag))
-    .map((e) => ({ ...e, basePath: "/blog" }));
-  const scraps = getAllEntries("scrap")
-    .filter((e) => e.tags.includes(tag))
-    .map((e) => ({ ...e, basePath: "/scrap" }));
-  return [...posts, ...scraps].sort((a, b) => b.created.localeCompare(a.created));
+  return [
+    ...getAllEntries("blog").filter((e) => e.tags.includes(tag)).map((e) => ({ ...e, basePath: "/blog" })),
+    ...getAllEntries("scrap").filter((e) => e.tags.includes(tag)).map((e) => ({ ...e, basePath: "/scrap" })),
+    ...getAllNotes().filter((e) => e.tags.includes(tag)).map((e) => ({ ...e, basePath: `/note/${e.page}` })),
+  ].sort((a, b) => b.created.localeCompare(a.created));
 }
 
 // Note
@@ -178,6 +176,7 @@ export function getNoteBySlug(
   page: string,
   slug: string
 ): { meta: NoteMeta; content: string } {
+  slug = decodeURIComponent(slug);
   const filePath = path.join(getNoteDir(), page, `${slug}.md`);
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
@@ -186,13 +185,13 @@ export function getNoteBySlug(
     meta: {
       slug,
       page,
-      title: extractTitle(slug, content),
+      title: data.title ?? extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
       thumbnail: parseThumbnail(data.thumbnail),
     },
-    content: normalizeCodeBlocks(stripTitle(content)),
+    content: normalizeCodeBlocks(content),
   };
 }
 
@@ -206,7 +205,7 @@ export function getNotesByPage(page: string): NoteMeta[] {
     notes.push({
       slug,
       page,
-      title: extractTitle(slug, content),
+      title: data.title ?? extractTitle(slug, content),
       created: parseDate(data.created),
       updated: parseDate(data.updated),
       tags: Array.isArray(data.tags) ? data.tags : [],
